@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="530.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16"
+            fx:controller="wetal.bibliotheque.ControllerLoginView">
+    <left>
+        <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #263f73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" layoutY="149.0" prefHeight="30.0" prefWidth="227.0" text="Pluto"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="Verdana Bold" size="24.0"/>
+                    </font>
+                    <effect>
+                        <DropShadow/>
+                    </effect>
+                </Label>
+                <Label alignment="CENTER" layoutX="5.0" layoutY="185.0" prefHeight="30.0" prefWidth="227.0"
+                       text="planet Nine" textFill="WHITE">
+                    <font>
+                        <Font name="Ink Free" size="22.0"/>
+                    </font>
+                    <effect>
+                        <DropShadow/>
+                    </effect>
+                </Label>
+                <Circle fill="TRANSPARENT" layoutX="119.0" layoutY="185.0" radius="100.0" stroke="#757278b5"
+                        strokeType="INSIDE"/>
+                <Circle layoutX="49.0" layoutY="115.0" radius="9.0" strokeType="INSIDE">
+                    <fill>
+                        <LinearGradient endX="0.9007633442187127" endY="0.8625954234873066"
+                                        startX="0.08396946291887124">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color/>
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="1.0" green="1.0" blue="1.0"/>
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </fill>
+                    <stroke>
+                        <LinearGradient endX="0.23282443112089435" endY="0.18320612143014225">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color/>
+                                    </color>
+                                </Stop>
+                                <Stop offset="0.007680491551459294">
+                                    <color>
+                                        <Color red="1.0" green="1.0" blue="1.0"/>
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="1.0" green="1.0" blue="1.0"/>
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </stroke>
+                    <effect>
+                        <DropShadow>
+                            <input>
+                                <GaussianBlur/>
+                            </input>
+                        </DropShadow>
+                    </effect>
+                </Circle>
+                <Label alignment="CENTER" layoutX="5.0" layoutY="347.0" prefHeight="30.0" prefWidth="227.0"
+                       text="CopyLeft 2021. Wetalś rights reserved." textFill="WHITE">
+                    <font>
+                        <Font name="Constantia Bold" size="10.0"/>
+                    </font>
+                    <effect>
+                        <DropShadow/>
+                    </effect>
+                </Label>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="530.0" prefWidth="517.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" layoutX="114.0" layoutY="60.0" prefHeight="30.0" prefWidth="286.0"
+                       text="Solaris Log'n" textFill="WHITE">
+                    <font>
+                        <Font name="Verdana Bold" size="18.0"/>
+                    </font>
+                    <effect>
+                        <DropShadow/>
+                    </effect>
+                </Label>
+                <Label layoutX="56.0" layoutY="137.0" text="UserName">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="56.0" layoutY="180.0" text="Password">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="userNameTextField" layoutX="169.0" layoutY="134.0" onAction="#loginAction"
+                           prefHeight="26.0" prefWidth="179.0" promptText="Username"/>
+                <PasswordField fx:id="passwordField" layoutX="169.0" layoutY="177.0" onAction="#loginAction"
+                               prefHeight="26.0" prefWidth="179.0" promptText="Password"/>
+                <Button fx:id="loginButton" layoutX="133.0" layoutY="234.0" mnemonicParsing="false"
+                        onAction="#loginAction" prefHeight="30.0" prefWidth="249.0"
+                        style="-fx-background-color: #263f73;" text="LogIn" textFill="#efefef">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="cancelButton" layoutX="133.0" layoutY="289.0" mnemonicParsing="false"
+                        onAction="#setCancelButton" prefHeight="30.0" prefWidth="250.0"
+                        style="-fx-background-color: #263f73;" text="Cancel" textFill="#efefef">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+                <Label fx:id="warningLabel" alignment="CENTER" layoutX="18.0" layoutY="91.0" prefHeight="18.0"
+                       prefWidth="250.0" textFill="#f70202"/>
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>

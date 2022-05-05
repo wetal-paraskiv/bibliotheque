@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import wetal.bibliotheque.table_controls.PTableColumn?>
+<?import javafx.scene.layout.BorderPane?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="530.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16"
+      fx:controller="wetal.bibliotheque.ControllerMembersView">
+    <children>
+        <BorderPane prefHeight="30.0" prefWidth="1000.0">
+            <top>
+                <fx:include source="menu.fxml"/>
+            </top>
+        </BorderPane>
+        <TextField fx:id="filterField" prefHeight="22.0" prefWidth="150.0" promptText="Filter"/>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="3.0" prefHeight="20.0"
+               prefWidth="1000.0" text="Members List" textFill="#0f9ed7">
+            <font>
+                <Font name="Constantia Bold" size="16.0"/>
+            </font>
+        </Label>
+        <TableView fx:id="myTableView" editable="true" prefHeight="800" prefWidth="1000.0"
+                   stylesheets="@../../css/styles.css">
+            <columns>
+                <PTableColumn fx:id="id" percentageWidth="0.03" text="id"/>
+                <PTableColumn fx:id="name" percentageWidth="0.3" text="name"/>
+                <PTableColumn fx:id="email" percentageWidth="0.3" text="email"/>
+                <PTableColumn fx:id="phone" percentageWidth="0.2" text="phone"/>
+                <PTableColumn fx:id="date" percentageWidth="0.15" text="date"/>
+            </columns>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+            </padding>
+        </TableView>
+    </children>
+</VBox>

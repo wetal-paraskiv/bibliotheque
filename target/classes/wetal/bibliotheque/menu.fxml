@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wetal.bibliotheque.ControllerMenu">
+    <children>
+        <BorderPane fx:id="borderPane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <top>
+                <MenuBar fx:id="myMenuBar" minHeight="30" minWidth="1000" style="-fx-background-color: #a1a69d;">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="BiblioApp">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#loginViewScene" text="Pause APP" />
+                                <MenuItem mnemonicParsing="false" onAction="#quit" text="Quit APP" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Books">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#booksTable" text="Books List" />
+                                <MenuItem mnemonicParsing="false" onAction="#newBookAction" text="New Book" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Members">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#membersTable" text="Members List" />
+                                <MenuItem mnemonicParsing="false" onAction="#newMemberAction" text="New Member" />
+                                <MenuItem mnemonicParsing="false" onAction="#topTenMembersByBooks" text="TopTen Member/Books" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Authors">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#authorsTable" text="Authors List" />
+<!--                                <MenuItem mnemonicParsing="false" onAction="#newAuthorAction" text="New Author" />-->
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Lendings">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#issuesTable" text="Lending List" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Statistics">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#toStatistics" text="Some Statistics" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Info-Help">
+                            <items>
+                                <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutScene" text="NumDutyBooks" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="HOME">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#toSceneHome" text="HOME Page" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>

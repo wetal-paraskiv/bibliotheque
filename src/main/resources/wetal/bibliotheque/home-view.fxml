@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<?import org.controlsfx.control.SearchableComboBox?>
+<?import javafx.scene.layout.BorderPane?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" prefHeight="530.0" prefWidth="1000.0"
+      xmlns="http://javafx.com/javafx/16" fx:controller="wetal.bibliotheque.ControllerHome">
+    <children>
+        <BorderPane>
+            <top>
+                <fx:include source="menu.fxml" />
+            </top>
+        </BorderPane>
+        <TabPane prefHeight="500.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Lending the Books">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <Label alignment="CENTER" layoutX="360.0" layoutY="25.0" prefHeight="50.0"
+                                       prefWidth="278.0" text="Books LENDING" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Constantia Bold" size="20.0"/>
+                                    </font>
+                                    <textFill>
+                                        <RadialGradient centerX="0.46888885498046873" centerY="0.5038167720532599"
+                                                        radius="0.5">
+                                            <stops>
+                                                <Stop>
+                                                    <color>
+                                                        <Color/>
+                                                    </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                    <color>
+                                                        <Color red="0.019607843831181526" green="0.04313725605607033"
+                                                               blue="0.48235294222831726"/>
+                                                    </color>
+                                                </Stop>
+                                            </stops>
+                                        </RadialGradient>
+                                    </textFill>
+                                </Label>
+                                <SearchableComboBox fx:id="cartBook1OUT" layoutX="520.0" layoutY="150.0"
+                                                    prefHeight="30.0" prefWidth="275.0" promptText="enter book id"/>
+                                <Button fx:id="saveCart" layoutX="410.0" layoutY="350.0" mnemonicParsing="false"
+                                        onAction="#writeNewCart" prefHeight="36.0" prefWidth="165.0"
+                                        text="Save lending cart" textFill="#050b7b">
+                                    <font>
+                                        <Font name="Constantia" size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Label layoutX="620.0" layoutY="120.0" prefHeight="18.0" prefWidth="81.0"
+                                       text="books cart" textFill="#050b7b"/>
+                                <SearchableComboBox fx:id="cartBook2OUT" layoutX="520.0" layoutY="200.0"
+                                                    prefHeight="30.0" prefWidth="275.0" promptText="enter book id"/>
+                                <SearchableComboBox fx:id="cartBook3OUT" layoutX="520.0" layoutY="250.0"
+                                                    prefHeight="30.0" prefWidth="275.0" promptText="enter book id"/>
+                                <Label layoutX="220.0" layoutY="120.0" prefHeight="18.0" prefWidth="126.0"
+                                       text="select member name" textFill="#050b7b"/>
+                                <SearchableComboBox fx:id="cartMemberOUT" layoutX="135.0" layoutY="150.0"
+                                                    prefHeight="30.0" prefWidth="300.0"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Returning the Books">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="220.0" layoutY="120.0" prefHeight="18.0" prefWidth="126.0"
+                                       text="select cart id" textFill="#050b7b"/>
+                                <SearchableComboBox fx:id="cartIdList" layoutX="135.0" layoutY="150.0" prefHeight="30.0"
+                                                    prefWidth="300.0"/>
+                                <SearchableComboBox fx:id="idReturnBook" layoutX="520.0" layoutY="150.0" prefHeight="30.0"
+                                                    prefWidth="275.0" promptText="enter book id"/>
+                                <Label alignment="CENTER" layoutX="360.0" layoutY="25.0" prefHeight="50.0"
+                                       prefWidth="230.0" text="Books RETURNING " textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Constantia Bold" size="20.0"/>
+                                    </font>
+                                    <textFill>
+                                        <RadialGradient centerX="0.46888885498046873" centerY="0.5038167720532599"
+                                                        radius="0.5">
+                                            <stops>
+                                                <Stop>
+                                                    <color>
+                                                        <Color/>
+                                                    </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                    <color>
+                                                        <Color red="0.019607843831181526" green="0.04313725605607033"
+                                                               blue="0.48235294222831726"/>
+                                                    </color>
+                                                </Stop>
+                                            </stops>
+                                        </RadialGradient>
+                                    </textFill>
+                                </Label>
+                                <Button fx:id="saveReturn" layoutX="410.0" layoutY="350.0" mnemonicParsing="false"
+                                        onAction="#returnBooks" prefHeight="30.0" prefWidth="165.0" text="Save book return"
+                                        textFill="#050b7b">
+                                    <font>
+                                        <Font name="Constantia" size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Label layoutX="620.0" layoutY="120.0" prefHeight="18.0" prefWidth="110.0"
+                                       text="books id to return" textFill="#050b7b"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+    <cursor>
+        <Cursor fx:constant="HAND"/>
+    </cursor>
+    <padding>
+        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+    </padding>
+</VBox>

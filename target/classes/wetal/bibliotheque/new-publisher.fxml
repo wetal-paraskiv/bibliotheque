@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="530.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wetal.bibliotheque.ControllerNewPublisher">
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="750.0" text="Register a new Publisher" textFill="#cc0707">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="newPublisherName" maxWidth="850" prefHeight="40.0" prefWidth="750.0" promptText="name">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+        <TextField fx:id="newPublisherDescription" maxWidth="850" prefHeight="40.0" prefWidth="750.0" promptText="description">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+        <Button fx:id="buttonSave" alignment="CENTER" contentDisplay="CENTER" maxWidth="750" mnemonicParsing="false" onAction="#savePublisher" prefHeight="40.0" prefWidth="750.0" style="-fx-background-color: #ff6363;" text="Save" textFill="WHITE">
+            <font>
+                <Font name="Constantia Italic" size="18.0" />
+            </font>
+        </Button>
+        <Button alignment="CENTER" maxWidth="750" mnemonicParsing="false" onAction="#toSceneHome" prefHeight="40.0" prefWidth="750.0" text="Cancel" textFill="#0f9ed7">
+            <font>
+                <Font name="System Italic" size="12.0" />
+            </font>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="40.0" left="100.0" right="100.0" top="40.0" />
+    </padding>
+</VBox>
