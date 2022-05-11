@@ -278,13 +278,13 @@ public class CRUDBooksLending {
                           "cart_id AS 'Cart id', " +
                           "Date(cart_date) AS 'Lending Date', " +
                           "book_id AS 'Book id', " +
-                          "(Date(current_timestamp) - Date(cart_date) - 7) AS 'OverDue Days'\n" +
+                          "DATEDIFF(CURRENT_DATE(), Date(cart_date)) AS 'OverDue Days'\n" +
                           "FROM members\n" +
                           "JOIN carts\n" +
                           "ON members.id = carts.member_id\n" +
                           "JOIN books_lending using(cart_id)\n" +
                           "WHERE book_duty = true\n" +
-                          "AND (Date(current_timestamp()) - Date(cart_date)) > 7;";
+                          "AND DATEDIFF(CURRENT_DATE(), Date(cart_date)) > 7;";
         try {
             connection = DriverManager.getConnection(url, owner, password);
             statement = connection.createStatement();
