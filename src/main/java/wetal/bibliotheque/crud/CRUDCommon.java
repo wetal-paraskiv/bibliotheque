@@ -13,7 +13,7 @@ public class CRUDCommon {
     private static final String password = resourceBundle.getString("db.password");
 
 
-    public static void writeNew(String destination, String name, String description) {
+    public void writeNew(String destination, String name, String description) {
         String query = String.format("INSERT INTO %1$s (name, description) VALUES (?, ?);", destination);
         Connection connection;
         try {
@@ -33,7 +33,7 @@ public class CRUDCommon {
     }
 
 
-    public static ResultSet readAll(String source) throws SQLException {
+    public ResultSet readAll(String source) throws SQLException {
         Connection connection;
         Statement statement;
         ResultSet resultSet;
@@ -52,7 +52,7 @@ public class CRUDCommon {
     }
 
 
-    public static void update(String name, String email, String id) {
+    public void update(String name, String email, String id) {
         int iD = Integer.parseInt(id);
         String query = String.format("UPDATE authors SET name = ?, email = ? WHERE id = %1$s;", iD);
 
@@ -69,7 +69,7 @@ public class CRUDCommon {
     }
 
 
-    public static void delete(String id) {
+    public void delete(String id) {
         String query = String.format("DELETE FROM publishers WHERE id = %1$s;", id);
 
         try (Connection con = DriverManager.getConnection(url, owner, password);

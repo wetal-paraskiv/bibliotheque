@@ -23,6 +23,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControllerEditBook implements Initializable {
+
+    CRUDAuthor crudAuthor = new CRUDAuthor();
+    CRUDCommon crudCommon = new CRUDCommon();
+
     @FXML
     private TextField title;
 
@@ -63,7 +67,7 @@ public class ControllerEditBook implements Initializable {
         alert.setHeaderText("warning!");
         alert.setContentText("Are U sure, U wanna delete that book ?");
         if (alert.showAndWait().get() == ButtonType.OK) {
-            CRUDBook.deleteBook(BookHolder.getInstance().getBook().getId());
+            new CRUDBook().deleteBook(BookHolder.getInstance().getBook().getId());
             backToTable();
         }
     }
@@ -74,13 +78,13 @@ public class ControllerEditBook implements Initializable {
         // get author id for each author -> to authors list
         List<String> authors = new ArrayList<>();
         if (chooseAuthor1.getValue() != null)
-            authors.add(CRUDAuthor.getID(chooseAuthor1.getValue().trim()));
+            authors.add(crudAuthor.getID(chooseAuthor1.getValue().trim()));
         if (chooseAuthor2.getValue() != null)
-            authors.add(CRUDAuthor.getID(chooseAuthor2.getValue().trim()));
+            authors.add(crudAuthor.getID(chooseAuthor2.getValue().trim()));
         if (chooseAuthor3.getValue() != null)
-            authors.add(CRUDAuthor.getID(chooseAuthor3.getValue().trim()));
+            authors.add(crudAuthor.getID(chooseAuthor3.getValue().trim()));
 
-        CRUDBook.updateBook(
+        new CRUDBook().updateBook(
                 title.getText(),
                 choosePublisher.getValue(),
                 chooseCategory.getValue(),
@@ -98,7 +102,7 @@ public class ControllerEditBook implements Initializable {
         // get all authors
         ObservableList<String> authorsList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDAuthor.readAllAuthors();
+            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
             while (resultSet.next()) {
                 authorsList.add(
                         resultSet.getString("name")
@@ -121,7 +125,7 @@ public class ControllerEditBook implements Initializable {
         // filling Publishers choiceBox
         ObservableList<String> publisherList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("publishers");
+            ResultSet resultSet = crudCommon.readAll("publishers");
             while (resultSet.next()) {
                 publisherList.add(
                         resultSet.getString("name")
@@ -137,7 +141,7 @@ public class ControllerEditBook implements Initializable {
         // filling Category choiceBox
         ObservableList<String> categoryList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("categories");
+            ResultSet resultSet = crudCommon.readAll("categories");
             while (resultSet.next()) {
                 categoryList.add(
                         resultSet.getString("name")
@@ -153,7 +157,7 @@ public class ControllerEditBook implements Initializable {
         // filling Language choiceBox
         ObservableList<String> languageList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("languages");
+            ResultSet resultSet = crudCommon.readAll("languages");
             while (resultSet.next()) {
                 languageList.add(
                         resultSet.getString("name")

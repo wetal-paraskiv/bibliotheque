@@ -57,7 +57,7 @@ public class ControllerBooksView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<Book> tableList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDBook.allBooksAuthorsFilteredByTitle("");
+            ResultSet resultSet = new CRUDBook().allBooksAuthorsFilteredByTitle("");
             while (resultSet.next()) {
                 tableList.add(new Book(
                         resultSet.getString("title"),

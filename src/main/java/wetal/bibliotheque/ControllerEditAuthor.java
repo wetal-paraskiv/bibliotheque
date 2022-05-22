@@ -51,14 +51,14 @@ public class ControllerEditAuthor implements Initializable {
         alert.setHeaderText("warning!");
         alert.setContentText("Are U sure, U wanna delete that author ?");
         if (alert.showAndWait().get() == ButtonType.OK) {
-            CRUDAuthor.deleteAuthor(AuthorHolder.getInstance().getAuthor().getId());
+            new CRUDAuthor().deleteAuthor(AuthorHolder.getInstance().getAuthor().getId());
             authorsTable();
         }
     }
 
     @FXML
     void updateAuthor() throws IOException {
-        CRUDAuthor.updateAuthor(
+        new CRUDAuthor().updateAuthor(
                 authorName.getText(),
                 authorEmail.getText(),
                 AuthorHolder.getInstance().getAuthor().getId());

@@ -56,7 +56,7 @@ public class ControllerLendingsView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<Lending> tableList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDBooksLending.readAll();
+            ResultSet resultSet = new CRUDBooksLending().readAll();
             while (resultSet.next()) {
                 tableList.add(new Lending(
                         resultSet.getString("id"),

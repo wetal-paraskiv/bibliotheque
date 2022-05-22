@@ -30,7 +30,7 @@ public class ControllerInfoView {
 
     @FXML
     private void showMessage() throws SQLException {
-        String size = String.valueOf(CRUDBook.getNumOfDutyBooks());
+        String size = String.valueOf(new CRUDBook().getNumOfDutyBooks());
         label5.setText(size);
         Label[] labels = {label1, label2, label3, label4, label5, label6};
         label6.setText("books on duty :)");

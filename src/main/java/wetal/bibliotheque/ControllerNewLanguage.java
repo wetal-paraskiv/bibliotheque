@@ -26,7 +26,7 @@ public class ControllerNewLanguage {
 
     @FXML
     void saveLanguage(ActionEvent event) throws IOException {
-        CRUDCommon.writeNew(
+        new CRUDCommon().writeNew(
                 "languages",
                 newLanguageName.getText(),
                 newLanguageDescription.getText());

@@ -23,6 +23,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControllerNewBook implements Initializable {
+
+    CRUDCommon crudCommon = new CRUDCommon();
+
     @FXML
     private TextField title;
 
@@ -53,7 +56,7 @@ public class ControllerNewBook implements Initializable {
         // get all authors
         ObservableList<String> authorsList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDAuthor.readAllAuthors();
+            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
             while (resultSet.next()) {
                 authorsList.add(
                         resultSet.getString("name")
@@ -71,7 +74,7 @@ public class ControllerNewBook implements Initializable {
         // filling Publishers choiceBox
         ObservableList<String> publisherList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("publishers");
+            ResultSet resultSet = crudCommon.readAll("publishers");
             while (resultSet.next()) {
                 publisherList.add(
                         resultSet.getString("name")
@@ -86,7 +89,7 @@ public class ControllerNewBook implements Initializable {
         // filling Category choiceBox
         ObservableList<String> categoryList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("categories");
+            ResultSet resultSet = crudCommon.readAll("categories");
             while (resultSet.next()) {
                 categoryList.add(
                         resultSet.getString("name")
@@ -101,7 +104,7 @@ public class ControllerNewBook implements Initializable {
         // filling Language choiceBox
         ObservableList<String> languageList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCommon.readAll("languages");
+            ResultSet resultSet = crudCommon.readAll("languages");
             while (resultSet.next()) {
                 languageList.add(
                         resultSet.getString("name")
@@ -152,15 +155,16 @@ public class ControllerNewBook implements Initializable {
 
     @FXML
     private void saveBook() {
+        CRUDAuthor crudAuthor = new CRUDAuthor();
         try {
             // get author id for each author -> to authors list
             List<String> authors = new ArrayList<>();
             if (chooseAuthor1.getValue() != null)
-                authors.add(CRUDAuthor.getID(chooseAuthor1.getValue().trim()));
+                authors.add(crudAuthor.getID(chooseAuthor1.getValue().trim()));
             if (chooseAuthor2.getValue() != null)
-                authors.add(CRUDAuthor.getID(chooseAuthor2.getValue().trim()));
+                authors.add(crudAuthor.getID(chooseAuthor2.getValue().trim()));
             if (chooseAuthor3.getValue() != null)
-                authors.add(CRUDAuthor.getID(chooseAuthor3.getValue().trim()));
+                authors.add(crudAuthor.getID(chooseAuthor3.getValue().trim()));
 
             // check if all fields are completed
             if (title.getText().equals("") ||
@@ -174,7 +178,7 @@ public class ControllerNewBook implements Initializable {
                         .text("Fill all necessary fields to save new Book :)")
                         .showWarning();
             } else {
-                CRUDBook.writeNewBook(
+                new CRUDBook().writeNewBook(
                         title.getText(),
                         choosePublisher.getValue(),
                         chooseCategory.getValue(),

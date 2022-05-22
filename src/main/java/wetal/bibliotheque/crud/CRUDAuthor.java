@@ -16,7 +16,7 @@ public class CRUDAuthor {
     private static final String password = resourceBundle.getString("db.password");
 
 
-    public static void writeNewAuthor(String name, String email) {
+    public void writeNewAuthor(String name, String email) {
         String query = "INSERT INTO authors (name, email) VALUES (?, ?);";
         try (Connection connection = DriverManager.getConnection(url, owner, password)) {
             PreparedStatement pst = connection.prepareStatement(query);
@@ -34,7 +34,7 @@ public class CRUDAuthor {
     }
 
 
-    public static ResultSet readAllAuthors() throws SQLException {
+    public ResultSet readAllAuthors() throws SQLException {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -53,7 +53,7 @@ public class CRUDAuthor {
     }
 
 
-    public static void updateAuthor(String name, String email, String id) {
+    public void updateAuthor(String name, String email, String id) {
         String query = String.format("UPDATE authors SET name = ?, email = ? WHERE author_id = %1$s;", id);
 
         try (Connection con = DriverManager.getConnection(url, owner, password);
@@ -69,7 +69,7 @@ public class CRUDAuthor {
     }
 
 
-    public static void deleteAuthor(String id) {
+    public void deleteAuthor(String id) {
         Connection connection;
         Statement statement;
         ResultSet constrained;
@@ -101,7 +101,7 @@ public class CRUDAuthor {
     }
 
 
-    public static String getID(String name) {
+    public String getID(String name) {
         Connection connection;
         Statement statement;
         ResultSet resultSet;

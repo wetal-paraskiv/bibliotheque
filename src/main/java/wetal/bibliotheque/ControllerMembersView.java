@@ -52,7 +52,7 @@ public class ControllerMembersView extends ControllerHome implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<Member> tableList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDMember.readAllMembers();
+            ResultSet resultSet = new CRUDMember().readAllMembers();
             while (resultSet.next()) {
                 tableList.add(new Member(
                         resultSet.getString("id"),

@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 
 public class CreateTables {
 
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
-    private static final String url = resourceBundle.getString("db.url");
-    private static final String owner = resourceBundle.getString("db.username");
-    private static final String password = resourceBundle.getString("db.password");
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+    private final String url = resourceBundle.getString("db.url");
+    private final String owner = resourceBundle.getString("db.username");
+    private final String password = resourceBundle.getString("db.password");
 
     public void createAllTables() {
         createTableBooks();

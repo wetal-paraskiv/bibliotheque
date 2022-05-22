@@ -25,7 +25,7 @@ public class ControllerNewPublisher {
 
     @FXML
     void savePublisher() throws IOException {
-        CRUDCommon.writeNew(
+        new CRUDCommon().writeNew(
                 "publishers",
                 newPublisherName.getText(),
                 newPublisherDescription.getText());

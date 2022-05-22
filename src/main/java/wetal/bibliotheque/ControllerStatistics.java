@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class ControllerStatistics implements Initializable {
 
+    private CRUDBooksLending crudBooksLending = new CRUDBooksLending();
+
     @FXML
     private Label resultSet;
 
@@ -33,43 +35,43 @@ public class ControllerStatistics implements Initializable {
 
     @FXML
     private void datePlusNumOfBooks() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.datePlusNumOfBooks()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.datePlusNumOfBooks()));
         resultSet.setText(text);
     }
 
     @FXML
     private void authorBooks() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.authorBooks()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.authorBooks()));
         resultSet.setText(text);
     }
 
     @FXML
     private void topTenCarts() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.topTenCarts()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.topTenCarts()));
         resultSet.setText(text);
     }
 
     @FXML
     private void topTenByBooks() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.topTenByBooks()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.topTenByBooks()));
         resultSet.setText(text);
     }
 
     @FXML
     private void cartsDutyBooks() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.cartsWithDutyBooks()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.cartsWithDutyBooks()));
         resultSet.setText(text);
     }
 
     @FXML
     private void overDueInfo() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.overDueInfo()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.overDueInfo()));
         resultSet.setText(text);
     }
 
     @FXML
     private void memberPlusAllBooks() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.memberPlusAllBooks()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.memberPlusAllBooks()));
         resultSet.setText(text);
     }
 
@@ -78,13 +80,13 @@ public class ControllerStatistics implements Initializable {
         Date start = java.sql.Date.valueOf(startPeriod.getValue());
         Date end = java.sql.Date.valueOf(endPeriod.getValue());
 
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.readAllByDates(start, end)));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.readAllByDates(start, end)));
         resultSet.setText(text);
     }
 
     @FXML
     private void readAllAction() throws SQLException {
-        String text = String.valueOf(CRUDBooksLending.getString(CRUDBooksLending.readAll()));
+        String text = String.valueOf(crudBooksLending.getString(crudBooksLending.readAll()));
         resultSet.setText(text);
     }
 

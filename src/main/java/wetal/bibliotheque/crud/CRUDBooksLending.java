@@ -14,7 +14,7 @@ public class CRUDBooksLending {
     private static final String password = resourceBundle.getString("db.password");
 
 
-    public static void writeNew(String cart_id, String book_id) {
+    public void writeNew(String cart_id, String book_id) {
         String query = "INSERT INTO books_lending (cart_id, book_id) VALUES (?, ?);";
 
         try (Connection connection = DriverManager.getConnection(url, owner, password);
@@ -31,7 +31,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static int returnBook(String cart_id, String book_id) {
+    public int returnBook(String cart_id, String book_id) {
         int response = 0;
         String query = "UPDATE books_lending " +
                        "SET book_duty = false, return_date = CURRENT_TIMESTAMP " +
@@ -51,7 +51,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet readAll() {
+    public ResultSet readAll() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -80,7 +80,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet readAllByDates(Date start, Date end) {
+    public ResultSet readAllByDates(Date start, Date end) {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet = null;
@@ -112,7 +112,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet datePlusNumOfBooks() {
+    public ResultSet datePlusNumOfBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -133,7 +133,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet authorBooks() {
+    public ResultSet authorBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -161,7 +161,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static StringBuilder getString(ResultSet resultSet) throws SQLException {
+    public StringBuilder getString(ResultSet resultSet) throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int columnsNumber = resultSetMetaData.getColumnCount();
@@ -177,7 +177,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet readAllIdForDutyBooks() {
+    public ResultSet readAllIdForDutyBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -194,7 +194,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet topTenCarts() {
+    public ResultSet topTenCarts() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -218,7 +218,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet topTenByBooks() {
+    public ResultSet topTenByBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -245,7 +245,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet cartsWithDutyBooks() {
+    public ResultSet cartsWithDutyBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -269,7 +269,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet overDueInfo() {
+    public ResultSet overDueInfo() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -298,7 +298,7 @@ public class CRUDBooksLending {
     }
 
 
-    public static ResultSet memberPlusAllBooks() {
+    public ResultSet memberPlusAllBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;

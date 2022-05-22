@@ -28,7 +28,7 @@ public class ControllerNewMember {
 
     @FXML
     void saveMember() throws IOException {
-        CRUDMember.writeNewMember(
+        new CRUDMember().writeNewMember(
                 newMemberName.getText(),
                 newMemberEmail.getText(),
                 newMemberPhone.getText()

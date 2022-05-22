@@ -21,6 +21,8 @@ import java.util.*;
 
 public class ControllerHome implements Initializable {
 
+    CRUDCart crudCart = new CRUDCart();
+
     @FXML
     private SearchableComboBox<String> cartMemberOUT;
     @FXML
@@ -47,7 +49,7 @@ public class ControllerHome implements Initializable {
         if (cartMemberOUT.getValue() != null && cartBook1OUT.getValue() != null) {
 
             // saving new cart
-            String member_id = CRUDMember.getMemberID(cartMemberOUT.getValue());
+            String member_id = new CRUDMember().getMemberID(cartMemberOUT.getValue());
 
             // get the list of cart books id
             List<String> cartBooksIdList = new ArrayList<>();
@@ -66,14 +68,14 @@ public class ControllerHome implements Initializable {
                             Arrays.toString(cartBooksIdList.toArray()), cartMemberOUT.getValue()));
 
             if (alert.showAndWait().get() == ButtonType.OK) {
-                String cart_id = CRUDCart.writeNewCart(member_id);
+                String cart_id = crudCart.writeNewCart(member_id);
 
                 for (String book_id : cartBooksIdList) {
                     // save each book in books_lending
-                    CRUDBooksLending.writeNew(cart_id, book_id);
+                    new CRUDBooksLending().writeNew(cart_id, book_id);
 
                     // set is_available for each book to false
-                    CRUDBook.setBookUnavailable(book_id);
+                    new CRUDBook().setBookUnavailable(book_id);
                 }
                 Notifications.create()
                         .title("Take care of BOOKS! :)")
@@ -110,8 +112,8 @@ public class ControllerHome implements Initializable {
             if (alert.showAndWait().get() == ButtonType.OK) {
 
                 // if return book is successfully, make those books available for others
-                if (CRUDBooksLending.returnBook(cart_id, book_id) > 0) {
-                    CRUDBook.setBookToAvailable(book_id);
+                if (new CRUDBooksLending().returnBook(cart_id, book_id) > 0) {
+                    new CRUDBook().setBookToAvailable(book_id);
                     Notifications.create()
                             .title("Thanks for taking care of BOOK! :)")
                             .text(String.format("Cart id: %1$s, successfully returned book with id: %2$s :)",
@@ -139,7 +141,7 @@ public class ControllerHome implements Initializable {
         // get list of members
         ObservableList<String> members = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDMember.readAllMembers();
+            ResultSet resultSet = new CRUDMember().readAllMembers();
             while (resultSet.next()) {
                 members.add(
                         resultSet.getString("name")
@@ -154,7 +156,7 @@ public class ControllerHome implements Initializable {
         // get list of cart id for return operations
         ObservableList<String> cartList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDCart.readAllCartsWithDutyBooks();
+            ResultSet resultSet = crudCart.readAllCartsWithDutyBooks();
             while (resultSet.next()) {
                 cartList.add(
                         resultSet.getString("cart_id") +
@@ -173,7 +175,7 @@ public class ControllerHome implements Initializable {
         // get list of available book ids to borrow
         ObservableList<String> availableBooksId = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDBook.readAllAvailableBooksId();
+            ResultSet resultSet = new CRUDBook().readAllAvailableBooksId();
             while (resultSet.next()) {
                 availableBooksId.add(
                         resultSet.getString("book_id")
@@ -190,7 +192,7 @@ public class ControllerHome implements Initializable {
         // get list of all duty_books to return
         ObservableList<String> allDutyBooks = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDBooksLending.readAllIdForDutyBooks();
+            ResultSet resultSet = new CRUDBooksLending().readAllIdForDutyBooks();
             while (resultSet.next()) {
                 allDutyBooks.add(
                         resultSet.getString("book_id")

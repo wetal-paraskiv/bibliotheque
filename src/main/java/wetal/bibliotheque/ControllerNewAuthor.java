@@ -25,7 +25,7 @@ public class ControllerNewAuthor {
 
     @FXML
     void saveAuthor() throws IOException {
-        CRUDAuthor.writeNewAuthor(
+        new CRUDAuthor().writeNewAuthor(
                 newAuthorName.getText(),
                 newAuthorEmail.getText());
         backToTable();

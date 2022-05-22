@@ -17,7 +17,7 @@ public class CRUDBook {
     private static final String password = resourceBundle.getString("db.password");
 
 
-    public static void writeNewBook(String title, String publisher, String category, String language, List<String> authors) {
+    public void writeNewBook(String title, String publisher, String category, String language, List<String> authors) {
         String saveBook = "INSERT INTO bibliotheque.books (title, publisher, category, lang) VALUES (?, ?, ?, ?);";
         String book_id = "";
         try (Connection connection = DriverManager.getConnection(url, owner, password);
@@ -52,7 +52,7 @@ public class CRUDBook {
     }
 
 
-    public static ResultSet readAllAvailableBooksId() throws SQLException {
+    public ResultSet readAllAvailableBooksId() throws SQLException {
         Connection connection;
         Statement statement;
         ResultSet resultSet = null;
@@ -62,14 +62,14 @@ public class CRUDBook {
             resultSet = statement.executeQuery("SELECT book_id FROM books WHERE is_available = true;");
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(CRUDBook.class.getName());
+            Logger lgr = Logger.getLogger(this.getClass().getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return resultSet;
     }
 
 
-    public static ResultSet allBooksAuthorsFilteredByTitle(String q) throws SQLException {
+    public ResultSet allBooksAuthorsFilteredByTitle(String q) throws SQLException {
         String filterString = "('%" + q.toUpperCase() + "%')";
         Connection connection;
         Statement statement;
@@ -98,7 +98,7 @@ public class CRUDBook {
     }
 
 
-    public static void updateBook(String title, String publisher, String category, String language, String id, List<String> authors) {
+    public void updateBook(String title, String publisher, String category, String language, String id, List<String> authors) {
         int book_id = Integer.parseInt(id);
         String query = String.format(
                 "UPDATE books SET title = ?, publisher = ?, category = ?, lang = ? WHERE book_id = %1$s;", book_id);
@@ -134,7 +134,7 @@ public class CRUDBook {
     }
 
 
-    public static void deleteBook(String book_id) {
+    public void deleteBook(String book_id) {
         String query = String.format("DELETE FROM books WHERE book_id = %1$s " +
                                      "AND NOT EXISTS(select author from books_authors where book = %1$s);", book_id);
         try (Connection con = DriverManager.getConnection(url, owner, password);
@@ -160,7 +160,7 @@ public class CRUDBook {
     }
 
 
-    public static int getNumOfDutyBooks() {
+    public int getNumOfDutyBooks() {
         String query = ("SELECT COUNT(*) AS num_of_rows FROM books WHERE is_available = false;");
         try {
             Connection connection = DriverManager.getConnection(url, owner, password);
@@ -177,7 +177,7 @@ public class CRUDBook {
     }
 
 
-    public static void setBookUnavailable(String book_id) {
+    public void setBookUnavailable(String book_id) {
         Connection connection;
         Statement statement;
         String setIsAvailableToFalse = String.format(
@@ -194,7 +194,7 @@ public class CRUDBook {
     }
 
 
-    public static void setBookToAvailable(String book_id) {
+    public void setBookToAvailable(String book_id) {
         Connection connection;
         Statement statement;
         String setIsAvailableToTrue = String.format(

@@ -13,7 +13,7 @@ public class CRUDCart {
     private static final String password = resourceBundle.getString("db.password");
 
 
-    public static String writeNewCart(String member_id) {
+    public String writeNewCart(String member_id) {
         String query = "INSERT INTO carts (member_id) VALUES (?);";
         String lastInsertedId = null;
         try (Connection connection = DriverManager.getConnection(url, owner, password);
@@ -37,7 +37,7 @@ public class CRUDCart {
     }
 
 
-    public static ResultSet readAllCarts() {
+    public ResultSet readAllCarts() {
         Connection connection;
         Statement statement;
         ResultSet resultSet;
@@ -56,7 +56,7 @@ public class CRUDCart {
     }
 
 
-    public static ResultSet readAllCartsWithDutyBooks() {
+    public ResultSet readAllCartsWithDutyBooks() {
         Connection connection;
         Statement statement;
         ResultSet resultSet;
@@ -80,7 +80,7 @@ public class CRUDCart {
     }
 
 
-    public static void deleteMember(String id) {
+    public void deleteMember(String id) {
         String query = String.format("DELETE FROM members WHERE id = %1$s;", id);
 
         try (Connection con = DriverManager.getConnection(url, owner, password);
@@ -94,7 +94,7 @@ public class CRUDCart {
     }
 
 
-    public static String getMemberID(String name) {
+    public String getMemberID(String name) {
         String query = String.format("SELECT id FROM members WHERE name = '%1$s';", name);
         try {
             Connection connection = DriverManager.getConnection(url, owner, password);

@@ -26,7 +26,7 @@ public class ControllerNewCategory {
 
     @FXML
     void saveCategory() throws IOException {
-        CRUDCommon.writeNew(
+        new CRUDCommon().writeNew(
                 "categories",
                 newCategoryName.getText(),
                 newCategoryDescription.getText());

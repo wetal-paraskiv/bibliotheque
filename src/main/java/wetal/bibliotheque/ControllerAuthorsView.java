@@ -55,7 +55,7 @@ public class ControllerAuthorsView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<Author> tableList = FXCollections.observableArrayList();
         try {
-            ResultSet resultSet = CRUDAuthor.readAllAuthors();
+            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
             while (resultSet.next()) {
                 tableList.add(new Author(
                         resultSet.getString("author_id"),

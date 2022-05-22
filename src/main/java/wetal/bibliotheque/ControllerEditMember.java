@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 
 public class ControllerEditMember implements Initializable {
 
+    CRUDMember crudMember = new CRUDMember();
+
     @FXML
     private TextField memberName;
 
@@ -48,14 +50,14 @@ public class ControllerEditMember implements Initializable {
         alert.setHeaderText("warning!");
         alert.setContentText(String.format("Are U sure, U wanna delete '%1$s' member ?", memberName.getText()));
         if (alert.showAndWait().get() == ButtonType.OK) {
-            CRUDMember.deleteMember(MemberHolder.getInstance().getMember().getId());
+            crudMember.deleteMember(MemberHolder.getInstance().getMember().getId());
             backToTable();
         }
     }
 
     @FXML
     void updateMember() throws IOException {
-        CRUDMember.updateMember(
+        crudMember.updateMember(
                 memberName.getText(),
                 memberEmail.getText(),
                 memberPhone.getText(),
