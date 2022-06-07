@@ -100,18 +100,24 @@ public class ControllerEditBook implements Initializable {
         title.setText(BookHolder.getInstance().getBook().getTitle());
 
         // get all authors
-        ObservableList<String> authorsList = FXCollections.observableArrayList();
+        ObservableList<String> authorsList = null;
         try {
-            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
-            while (resultSet.next()) {
-                authorsList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            authorsList = new CRUDAuthor().getAuthorsNames();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+//        ObservableList<String> authorsList = FXCollections.observableArrayList();
+//        try {
+//            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
+//            while (resultSet.next()) {
+//                authorsList.add(
+//                        resultSet.getString("name")
+//                );
+//            }
+//            resultSet.close();
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
 
         String[] authors = BookHolder.getInstance().getBook().getAuthors().split(",");
         // filling Author1, Author2, Author3 choiceBox's
@@ -123,49 +129,31 @@ public class ControllerEditBook implements Initializable {
         if (authors.length - 1 > 1) chooseAuthor3.setValue(authors[2]);
 
         // filling Publishers choiceBox
-        ObservableList<String> publisherList = FXCollections.observableArrayList();
+        ObservableList<String> publisherList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("publishers");
-            while (resultSet.next()) {
-                publisherList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            publisherList = crudCommon.readAll("publishers");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         choosePublisher.setItems(publisherList);
         choosePublisher.setValue(BookHolder.getInstance().getBook().getPublisher());
 
         // filling Category choiceBox
-        ObservableList<String> categoryList = FXCollections.observableArrayList();
+        ObservableList<String> categoryList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("categories");
-            while (resultSet.next()) {
-                categoryList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            categoryList = crudCommon.readAll("categories");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         chooseCategory.setItems(categoryList);
         chooseCategory.setValue(BookHolder.getInstance().getBook().getCategory());
 
         // filling Language choiceBox
-        ObservableList<String> languageList = FXCollections.observableArrayList();
+        ObservableList<String> languageList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("languages");
-            while (resultSet.next()) {
-                languageList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            languageList = crudCommon.readAll("languages");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         chooseLanguage.setItems(languageList);
         chooseLanguage.setValue(BookHolder.getInstance().getBook().getLanguage());

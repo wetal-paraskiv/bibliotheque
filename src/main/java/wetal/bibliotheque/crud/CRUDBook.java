@@ -1,7 +1,10 @@
 package wetal.bibliotheque.crud;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.controlsfx.control.Notifications;
+import wetal.bibliotheque.models.Book;
 
 import java.sql.*;
 import java.util.List;
@@ -52,27 +55,31 @@ public class CRUDBook {
     }
 
 
-    public ResultSet readAllAvailableBooksId() throws SQLException {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet = null;
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT book_id FROM books WHERE is_available = true;");
+    public ObservableList<String> readAllAvailableBooksId() throws SQLException {
+        ObservableList<String> availableBooksId = FXCollections.observableArrayList();
+        String query = "SELECT book_id FROM books WHERE is_available = true;";
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                availableBooksId.add(
+                        resultSet.getString("book_id")
+                );
+            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(this.getClass().getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return resultSet;
+        return availableBooksId;
     }
 
 
-    public ResultSet allBooksAuthorsFilteredByTitle(String q) throws SQLException {
+    public ObservableList<Book> allBooksAuthorsFilteredByTitle(String q) throws SQLException {
+        ObservableList<Book> tableList = FXCollections.observableArrayList();
         String filterString = "('%" + q.toUpperCase() + "%')";
-        Connection connection;
-        Statement statement;
         String query = "SELECT books.*, \n" +
                        "\t(SELECT GROUP_CONCAT(authors.name)\n" +
                        "\tFROM books_authors\n" +
@@ -85,16 +92,28 @@ public class CRUDBook {
                        "        ON authors.author_id = books_authors.author\n" +
                        "WHERE UPPER(books.title) LIKE %1$s\n" +
                        "GROUP BY books.title;";
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            return statement.executeQuery(String.format(query, filterString));
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement();) {
+
+            ResultSet resultSet = statement.executeQuery(String.format(query, filterString));
+
+            while (resultSet.next()) {
+                tableList.add(new Book(
+                        resultSet.getString("title"),
+                        resultSet.getString("authors"),
+                        resultSet.getString("publisher"),
+                        resultSet.getString("category"),
+                        resultSet.getString("lang"),
+                        resultSet.getString("book_id"),
+                        resultSet.getBoolean("is_available")
+                ));
+            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDBook.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return null;
+        return tableList;
     }
 
 
@@ -162,9 +181,9 @@ public class CRUDBook {
 
     public int getNumOfDutyBooks() {
         String query = ("SELECT COUNT(*) AS num_of_rows FROM books WHERE is_available = false;");
-        try {
-            Connection connection = DriverManager.getConnection(url, owner, password);
-            Statement statement = connection.createStatement();
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
             ResultSet resultset = statement.executeQuery(query);
             resultset.next();
             return resultset.getInt("num_of_rows");
@@ -178,13 +197,11 @@ public class CRUDBook {
 
 
     public void setBookUnavailable(String book_id) {
-        Connection connection;
-        Statement statement;
         String setIsAvailableToFalse = String.format(
                 "UPDATE books SET is_available = false WHERE book_id = %1$s;", book_id);
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
             statement.executeUpdate(setIsAvailableToFalse);
 
         } catch (SQLException ex) {
@@ -195,13 +212,11 @@ public class CRUDBook {
 
 
     public void setBookToAvailable(String book_id) {
-        Connection connection;
-        Statement statement;
         String setIsAvailableToTrue = String.format(
                 "UPDATE books SET is_available = true WHERE book_id = %1$s;", book_id);
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
             statement.executeUpdate(setIsAvailableToTrue);
 
         } catch (SQLException ex) {

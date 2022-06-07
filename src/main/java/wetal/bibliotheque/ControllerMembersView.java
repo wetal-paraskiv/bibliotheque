@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import wetal.bibliotheque.crud.CRUDMember;
 import wetal.bibliotheque.object_holders.MemberHolder;
 import wetal.bibliotheque.models.Member;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +19,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -50,22 +47,7 @@ public class ControllerMembersView extends ControllerHome implements Initializab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<Member> tableList = FXCollections.observableArrayList();
-        try {
-            ResultSet resultSet = new CRUDMember().readAllMembers();
-            while (resultSet.next()) {
-                tableList.add(new Member(
-                        resultSet.getString("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("register_date")
-                ));
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+        ObservableList<Member> tableList = new CRUDMember().readAllMembers();
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));

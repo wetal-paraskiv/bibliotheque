@@ -18,6 +18,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class ControllerHome implements Initializable {
 
@@ -139,52 +141,28 @@ public class ControllerHome implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // get list of members
-        ObservableList<String> members = FXCollections.observableArrayList();
-        try {
-            ResultSet resultSet = new CRUDMember().readAllMembers();
-            while (resultSet.next()) {
-                members.add(
-                        resultSet.getString("name")
+        ObservableList<String> members = new CRUDMember().readAllMembers().stream()
+                .sorted()
+                .map(m -> m.getName())
+                .collect(Collector.of(
+                        FXCollections::observableArrayList,
+                        ObservableList::add,
+                        (l1, l2) -> { l1.addAll(l2); return l1; })
                 );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
         cartMemberOUT.setItems(members);
 
         // get list of cart id for return operations
-        ObservableList<String> cartList = FXCollections.observableArrayList();
-        try {
-            ResultSet resultSet = crudCart.readAllCartsWithDutyBooks();
-            while (resultSet.next()) {
-                cartList.add(
-                        resultSet.getString("cart_id") +
-                        "; member: " +
-                        resultSet.getString("member_id") +
-                        "; on: " +
-                        resultSet.getString("cart_date").substring(0, 11)
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+        ObservableList<String> cartList = crudCart.readAllCartsWithDutyBooks();
         cartIdList.setItems(cartList);
 
         // get list of available book ids to borrow
-        ObservableList<String> availableBooksId = FXCollections.observableArrayList();
+        ObservableList<String> availableBooksId = null;
         try {
-            ResultSet resultSet = new CRUDBook().readAllAvailableBooksId();
-            while (resultSet.next()) {
-                availableBooksId.add(
-                        resultSet.getString("book_id")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            availableBooksId = new CRUDBook().readAllAvailableBooksId();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         cartBook1OUT.setItems(availableBooksId);
         cartBook2OUT.setItems(availableBooksId);
         cartBook3OUT.setItems(availableBooksId);

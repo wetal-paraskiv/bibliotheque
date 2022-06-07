@@ -54,65 +54,42 @@ public class ControllerNewBook implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // get all authors
-        ObservableList<String> authorsList = FXCollections.observableArrayList();
+        ObservableList<String> authorsList = null;
         try {
-            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
-            while (resultSet.next()) {
-                authorsList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            authorsList = new CRUDAuthor().getAuthorsNames();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         // filling Author1, Author2, Author3 choiceBox's
         chooseAuthor1.setItems(authorsList);
         chooseAuthor2.setItems(authorsList);
         chooseAuthor3.setItems(authorsList);
 
         // filling Publishers choiceBox
-        ObservableList<String> publisherList = FXCollections.observableArrayList();
+        ObservableList<String> publisherList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("publishers");
-            while (resultSet.next()) {
-                publisherList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            publisherList = crudCommon.readAll("publishers");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         choosePublisher.setItems(publisherList);
 
         // filling Category choiceBox
-        ObservableList<String> categoryList = FXCollections.observableArrayList();
+        ObservableList<String> categoryList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("categories");
-            while (resultSet.next()) {
-                categoryList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            categoryList = crudCommon.readAll("categories");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         chooseCategory.setItems(categoryList);
 
         // filling Language choiceBox
-        ObservableList<String> languageList = FXCollections.observableArrayList();
+        ObservableList<String> languageList = null;
         try {
-            ResultSet resultSet = crudCommon.readAll("languages");
-            while (resultSet.next()) {
-                languageList.add(
-                        resultSet.getString("name")
-                );
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            languageList = crudCommon.readAll("languages");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         chooseLanguage.setItems(languageList);
     }

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -53,20 +54,27 @@ public class ControllerAuthorsView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<Author> tableList = FXCollections.observableArrayList();
+//        ObservableList<Author> tableList = FXCollections.observableArrayList();
+        ObservableList<Author> tableList = null;
         try {
-            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
-            while (resultSet.next()) {
-                tableList.add(new Author(
-                        resultSet.getString("author_id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email")
-                ));
-            }
-            resultSet.close();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            tableList = new CRUDAuthor().readAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+//        try {
+//            ResultSet resultSet = new CRUDAuthor().readAllAuthors();
+//            while (resultSet.next()) {
+//                tableList.add(new Author(
+//                        resultSet.getString("author_id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("email")
+//                ));
+//            }
+//            resultSet.close();
+//
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));

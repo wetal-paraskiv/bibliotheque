@@ -1,6 +1,10 @@
 package wetal.bibliotheque.crud;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import wetal.bibliotheque.models.Member;
+
 import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -34,22 +38,29 @@ public class CRUDMember {
     }
 
 
-    public ResultSet readAllMembers() {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet = null;
+    public ObservableList<Member> readAllMembers() {
+        ObservableList<Member> tableList = FXCollections.observableArrayList();
         String query = "SELECT * FROM members;";
 
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()){
+
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                tableList.add(new Member(
+                        resultSet.getString("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("register_date")
+                ));
+            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDMember.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return resultSet;
+        return tableList;
     }
 
 
@@ -87,14 +98,13 @@ public class CRUDMember {
 
     public String getMemberID(String name) {
         String query = String.format("SELECT id FROM members WHERE name = '%1$s';", name);
-        try {
-            Connection connection = DriverManager.getConnection(url, owner, password);
-            Statement statement = connection.createStatement();
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
-            String id = resultSet.getString(1);
-            connection.close();
-            return id;
+            return resultSet.getString(1);
+
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDMember.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);

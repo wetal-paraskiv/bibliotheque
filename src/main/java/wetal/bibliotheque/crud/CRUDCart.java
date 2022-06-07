@@ -1,5 +1,8 @@
 package wetal.bibliotheque.crud;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,73 +40,45 @@ public class CRUDCart {
     }
 
 
-    public ResultSet readAllCarts() {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet;
-        String query = "SELECT * FROM carts;";
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-            return resultSet;
-
-        } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(CRUDCart.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-        }
-        return null;
-    }
-
-
-    public ResultSet readAllCartsWithDutyBooks() {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet;
+    public ObservableList<String> readAllCartsWithDutyBooks() {
+        ObservableList<String> cartList = FXCollections.observableArrayList();
         String query = "SELECT carts.cart_id, member_id, cart_date FROM carts\n" +
                        "LEFT JOIN books_lending \n" +
                        "ON carts.cart_id = books_lending.cart_id\n" +
                        "WHERE book_duty = true\n" +
                        "GROUP BY carts.cart_id\n" +
                        "ORDER BY cart_date;";
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-            return resultSet;
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                cartList.add(
+                        resultSet.getString("cart_id") +
+                        "; member: " +
+                        resultSet.getString("member_id") +
+                        "; on: " +
+                        resultSet.getString("cart_date").substring(0, 11)
+                );
+            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDCart.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return null;
-    }
-
-
-    public void deleteMember(String id) {
-        String query = String.format("DELETE FROM members WHERE id = %1$s;", id);
-
-        try (Connection con = DriverManager.getConnection(url, owner, password);
-             PreparedStatement pst = con.prepareStatement(query)) {
-            pst.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(CRUDMember.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-        }
+        return cartList;
     }
 
 
     public String getMemberID(String name) {
         String query = String.format("SELECT id FROM members WHERE name = '%1$s';", name);
-        try {
-            Connection connection = DriverManager.getConnection(url, owner, password);
-            Statement statement = connection.createStatement();
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
-            String id = resultSet.getString(1);
-            connection.close();
-            return id;
+            return resultSet.getString(1);
+
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDMember.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);

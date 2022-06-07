@@ -1,7 +1,10 @@
 package wetal.bibliotheque.crud;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.controlsfx.control.Notifications;
+import wetal.bibliotheque.models.Author;
 
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -18,8 +21,8 @@ public class CRUDAuthor {
 
     public void writeNewAuthor(String name, String email) {
         String query = "INSERT INTO authors (name, email) VALUES (?, ?);";
-        try (Connection connection = DriverManager.getConnection(url, owner, password)) {
-            PreparedStatement pst = connection.prepareStatement(query);
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             PreparedStatement pst = connection.prepareStatement(query)) {
 
             pst.setString(1, name);
             pst.setString(2, email);
@@ -34,22 +37,48 @@ public class CRUDAuthor {
     }
 
 
-    public ResultSet readAllAuthors() throws SQLException {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet = null;
+    public ObservableList<String> getAuthorsNames() throws SQLException {
+        ObservableList<String> authorsNames = FXCollections.observableArrayList();
         String query = "SELECT * FROM authors;";
 
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                authorsNames.add(resultSet.getString("name"));
+            }
+            return authorsNames;
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDAuthor.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return resultSet;
+        return null;
+    }
+
+    public ObservableList<Author> readAll() throws SQLException {
+        String query = "SELECT * FROM authors;";
+        ObservableList<Author> tableList = FXCollections.observableArrayList();
+
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                tableList.add(new Author(
+                        resultSet.getString("author_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email")
+                ));
+            }
+            resultSet.close();
+            return tableList;
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CRUDAuthor.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return null;
     }
 
 
@@ -70,16 +99,13 @@ public class CRUDAuthor {
 
 
     public void deleteAuthor(String id) {
-        Connection connection;
-        Statement statement;
-        ResultSet constrained;
         String check = String.format("Select * FROM books_authors WHERE author = %1$s;", id);
         String deleteQuery = String.format("DELETE FROM authors WHERE author_id = %1$s;", id);
 
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            constrained = statement.executeQuery(check);
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
+            ResultSet constrained = statement.executeQuery(check);
 
             if (!constrained.next()) {
                 statement.executeUpdate(deleteQuery);
@@ -102,17 +128,13 @@ public class CRUDAuthor {
 
 
     public String getID(String name) {
-        Connection connection;
-        Statement statement;
-        ResultSet resultSet;
         String query = String.format("SELECT author_id from authors WHERE name = '%1$s';", name);
-        try {
-            connection = DriverManager.getConnection(url, owner, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
+        try (Connection connection = DriverManager.getConnection(url, owner, password);
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) return resultSet.getString(1);
+
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CRUDAuthor.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);

@@ -39,6 +39,7 @@ public class CRUDBooksLending {
                        "AND book_id = ?;";
         try (Connection con = DriverManager.getConnection(url, owner, password);
              PreparedStatement pst = con.prepareStatement(query)) {
+
             pst.setString(1, cart_id);
             pst.setString(2, book_id);
             response = pst.executeUpdate();
